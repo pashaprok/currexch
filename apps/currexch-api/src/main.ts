@@ -1,14 +1,11 @@
-/**
- * This is not a production server yet!
- * This is only a minimal backend to get started.
- */
-
 import * as express from 'express';
+import * as cors from 'cors';
 
 const app = express();
+app.use(cors());
 
 app.get('/api', (req, res) => {
-  res.send({ message: 'Welcome to currexch-api!' });
+  res.send({ message: 'Welcome to CurrExchAPI!' });
 });
 
 const port = process.env.port || 3333;

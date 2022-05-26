@@ -2,6 +2,9 @@
   "$schema": "./node_modules/nx/schemas/workspace-schema.json",
   "version": 2,
   "projects": {
-    "currexch-api": "apps/currexch-api"
+    "currexch-api": "apps/currexch-api",
+    "currexch-client": "apps/currexch-client",
+    "currexch-client-e2e": "apps/currexch-client-e2e",
+    "shared-types": "libs/shared-types"
   }
 }
