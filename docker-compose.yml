@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  mysqldb:
+    image: mysql:5.7
+    restart: always
+    environment:
+      - 'MYSQL_USER=${DB_USER}'
+      - 'MYSQL_PASSWORD=${DB_USER_PASS}'
+      - 'MYSQL_ROOT_PASSWORD=${DB_ROOT_PASS}'
+      - 'MYSQL_DATABASE=${DB_NAME}'
+    ports:
+      - '${DB_PORT}:${DB_PORT}'
+    volumes:
+      - db:/var/lib/mysql
+
+volumes:
+  db:

@@ -4,10 +4,12 @@
   "license": "MIT",
   "scripts": {
     "test": "nx test",
-    "serve": "nx run-many --all --parallel --target=serve",
+    "serve": "npm run db:start && nx run-many --all --parallel --target=serve",
     "build": "nx run-many --all --parallel --target=build",
     "format": "prettier --ignore-path .gitignore --write \"**/*.+(js|jsx|ts|tsx|json)\"",
-    "api:serve": "nx run currexch-api:serve",
+    "db:start": "docker-compose --env-file ./.env up -d",
+    "db:down": "docker-compose down",
+    "api:serve": "npm run db:start && nx run currexch-api:serve",
     "api:build": "nx run currexch-api:build",
     "api:lint": "nx run currexch-api:lint",
     "api:test": "nx run currexch-api:test",
@@ -22,12 +24,17 @@
     "cors": "^2.8.5",
     "dotenv-config": "^0.1.1",
     "express": "4.17.2",
+    "express-async-errors": "^3.1.1",
+    "http-errors": "^2.0.0",
+    "mysql": "^2.18.1",
     "react": "18.1.0",
     "react-dom": "18.1.0",
     "react-router-dom": "6.3.0",
+    "reflect-metadata": "^0.1.13",
     "regenerator-runtime": "0.13.7",
     "tsc-watch": "^5.0.3",
-    "tslib": "^2.3.0"
+    "tslib": "^2.3.0",
+    "typeorm": "^0.3.6"
   },
   "devDependencies": {
     "@nrwl/cli": "14.1.9",
