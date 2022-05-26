@@ -10,7 +10,8 @@
         "outputPath": "dist/apps/currexch-api",
         "main": "apps/currexch-api/src/main.ts",
         "tsConfig": "apps/currexch-api/tsconfig.app.json",
-        "assets": ["apps/currexch-api/src/assets"]
+        "assets": ["apps/currexch-api/src/assets"],
+        "generatePackageJson": true
       },
       "configurations": {
         "production": {
