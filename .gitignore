@@ -40,3 +40,6 @@ Thumbs.db
 
 # ENV
 ./.env
+
+# logs
+./apps/currexch-api/src/logs

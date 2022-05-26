@@ -3,11 +3,12 @@ import { appConfig } from './config/app.config';
 
 import app from './app';
 import { AppDataSource } from './data-source';
+import { appWorkLogger } from './utils/logger';
 
 AppDataSource.initialize()
   .then(async () => {
     app.listen(appConfig.port, () => {
-      console.log(`App running on port ${appConfig.port}...`);
+      appWorkLogger.info(`app running on port ${appConfig.port}...`);
     });
   })
-  .catch((error) => console.error('Error: ', error));
+  .catch((error) => appWorkLogger.error('Error: ', error));
