@@ -39,7 +39,7 @@ testem.log
 Thumbs.db
 
 # ENV
-./.env
+/.env
 
 # logs
 ./apps/currexch-api/src/logs

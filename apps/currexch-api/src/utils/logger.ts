@@ -61,3 +61,6 @@ class InfoLogger {
 }
 
 export const appWorkLogger: Logger = new InfoLogger('app-work').logger;
+export const exchangeRatesAPILogger: Logger = new InfoLogger(
+  'exchange-rates-api',
+).logger;
