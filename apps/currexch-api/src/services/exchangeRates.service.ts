@@ -1,10 +1,9 @@
-import http from 'https';
 import { Response } from 'express';
 import { exchangeRatesAPIConfig } from '../config/exchangeRatesAPI.config';
 import { ExchangeRatesEndpoints } from '../enums/exchangeRatesEndpoints.enum';
 import { exchangeRatesAPILogger } from '../utils/logger';
 import { catchErrors } from '../middlewares/catchErrors';
-import { AvailableCurrencies } from '../types/apiResponses.types';
+import axios from 'axios';
 
 export class ExchangeRatesService {
   readonly APIKey: string = exchangeRatesAPIConfig.apiKey;
@@ -20,36 +19,24 @@ export class ExchangeRatesService {
     path: exchangeRatesAPIConfig.pathPrefix,
   };
 
-  static async parseResponse<T>(json: string): Promise<T> {
-    return await JSON.parse(json);
+  async getAvailableSymbols(res: Response) {
+    const result = await this.requestAPI(this.endpoints.symbols);
+    if (result instanceof Error) {
+      exchangeRatesAPILogger.error(result);
+      return catchErrors(result, res);
+    }
+
+    exchangeRatesAPILogger.info(JSON.stringify(result.data));
+    return res.status(200).json(result.data);
   }
 
-  getAvailableSymbols(res: Response) {
-    this.requestAPI(res, this.endpoints.symbols);
-  }
-
-  private requestAPI(response: Response, path: ExchangeRatesEndpoints) {
-    let data: string | Error = '';
-    const options = this.requestOptions;
-    options.path = options.path + path;
-    const req = http.request(options, (res) => {
-      res.on('data', (chunk) => {
-        data = data + chunk;
-      });
-
-      res.on('end', async () => {
-        if (typeof data === 'string') {
-          const result =
-            await ExchangeRatesService.parseResponse<AvailableCurrencies>(data);
-          return response.status(200).json(result);
-        }
-      });
-    });
-
-    req.on('error', (e) => {
-      exchangeRatesAPILogger.error(e);
-      return catchErrors(e, response);
-    });
-    req.end();
+  async requestAPI(path: ExchangeRatesEndpoints) {
+    return axios(
+      `https://${this.requestOptions.hostname}${this.requestOptions.path}${path}`,
+      {
+        method: this.requestOptions.method,
+        headers: this.requestOptions.headers,
+      },
+    );
   }
 }

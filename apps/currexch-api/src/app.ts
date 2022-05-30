@@ -2,19 +2,18 @@ import express, { Application } from 'express';
 import cors from 'cors';
 import { catchErrors } from './middlewares/catchErrors';
 import exchangesRouter from './routes/exchanges.routes';
+import { apiPathPrefix } from './constants/paths.constants';
 
 const app: Application = express();
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-const pathPrefix = '/api';
-
-app.get(pathPrefix, (req, res) => {
-  res.send({ message: 'Welcome to CurrExchAPI! new' });
+app.get(apiPathPrefix, (req, res) => {
+  res.send({ message: 'Welcome to CurrExchAPI!' });
 });
 
-app.use(`${pathPrefix}/exchanges`, exchangesRouter);
+app.use(`${apiPathPrefix}/exchanges`, exchangesRouter);
 
 app.use(catchErrors);
 
